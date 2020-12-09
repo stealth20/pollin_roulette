@@ -1,3 +1,12 @@
+# Hey Emacs, this is a -*- makefile -*-
+#----------------------------------------------------------------------------
+# AVR-GCC Makefile template, derived from the WinAVR template (public domain)
+#
+# --------------------------------- WARNING ---------------------------------
+# Running "make fuses" can and will brick your AVR if you are not careful
+# To avoid this I recommend consulting http://www.engbedded.com/fusecalc
+#
+# ---------------------------------------------------------------------------
 # On command line:
 #
 # make all = Make software.
