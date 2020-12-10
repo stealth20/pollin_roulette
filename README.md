@@ -17,6 +17,10 @@ make
 
 ## PROGRAM
 
+To program controller directly in the circuit board by using ISP connector you have to decrease power voltage from 9V to max 6V.
+Because programming pins are used as GPIO's to control the LEDs directly we have to reduce supply voltage under forward voltage of LEDs.
+Alternatively you can unsolder R1, R2 and R3 before programming.
+
 ### Program fuses first:
 
 - Internal RC 4Mhz 
