@@ -1,8 +1,6 @@
+#include "avr/io.h"
 
-enum Beep{
-    Ball,
-    EndSound
-};
+#define SPEAKER_PIN     PB2
 
 void beep_init(void);
-void beep(enum Beep type);
+void beep(uint8_t type);

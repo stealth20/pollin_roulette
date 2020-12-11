@@ -84,38 +84,37 @@ void setLed(int8_t i){
     if(i < 0 || i > 36 ){
         return;
     }
+    uint8_t i_d = i / 8, i_r = 1<<(i % 8);
 
-    volatile uint8_t* hport;
-    volatile uint8_t* lport;
-    if(hport_mask[i / 8] & (1<<(i % 8))){
-        hport = &PORTD;
+    volatile uint8_t* port;
+    //HIGH PIN
+    if(hport_mask[i_d] & i_r){
+        port = &PORTD;
     }else{
-        hport = &PORTB;
+        port = &PORTB;
     }
-    if(lport_mask[i / 8] & (1<<(i % 8))){
-        lport = &PORTD;
+    *(port - 1) |= (1<<pins[i].hpin); //DDR
+    *(port) |= (1<<pins[i].hpin);
+
+    //LOW PIN
+    if(lport_mask[i_d] & (i_r)){
+        port = &PORTD;
     }else{
-        lport = &PORTB;
+        port = &PORTB;
     }
-
-    *(hport - 1) |= (1<<pins[i].hpin); //DDR
-    *(hport) |= (1<<pins[i].hpin);
-
-    *(lport - 1) |= (1<<pins[i].lpin); //DDR
-    *(lport) &= ~(1<<pins[i].lpin);
+    *(port - 1) |= (1<<pins[i].lpin); //DDR
+    *(port) &= ~(1<<pins[i].lpin);
 }
 
 void ledByeBye(void){
-    uint16_t n = 80;
-    uint16_t s = 30;
+    uint8_t n = 80;
+    uint8_t s = 30;
     for(uint16_t j = s; j < n; ++j){
-        //setLed(LED_ALL_OFF);
         if(j < (n-s)/2+s/2){
             setLed((j*j/20) % 36);
         }else{
             setLed(((n+s-j)*(n+s-j)/20)%36);
         }
-
         _delay_ms(20);
     }
     setLed(LED_ALL_OFF);
